@@ -11,8 +11,10 @@ class Settings(BaseSettings):
     RAILWAY_API_BASE_URL: str = os.getenv("RAILWAY_API_BASE_URL", "https://railkit-api.rajivdubey.dev/api")
     DEFAULT_QUOTA: str = os.getenv("DEFAULT_QUOTA", "GN")
 
-    class Config:
-        env_file = ".env"
-        env_file_encoding = "utf-8"
+    model_config = {
+        "env_file": ".env",
+        "env_file_encoding": "utf-8",
+        "extra": "allow",
+    }
 
 settings = Settings()
