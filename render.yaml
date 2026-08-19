@@ -1,0 +1,15 @@
+services:
+  - type: worker
+    name: train-seat-bot
+    env: docker
+    dockerfilePath: ./Dockerfile
+    plan: free
+    envVars:
+      - key: BOT_TOKEN
+        sync: false
+      - key: RAILWAY_API_KEY
+        sync: false
+      - key: RAILWAY_API_BASE_URL
+        value: https://api.railwayapi.com/v2
+      - key: DEFAULT_QUOTA
+        value: GN
