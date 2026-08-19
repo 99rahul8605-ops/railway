@@ -42,8 +42,15 @@ class RailwayAPI:
     )
     async def _get(self, url: str) -> Dict[str, Any]:
         async with API_SEMAPHORE:
-            logger.debug("Requesting %s", url)
+            logger.info("Requesting %s", url)
             resp = await self.client.get(url, headers=self._headers())
+            if resp.status_code >= 400:
+                logger.error(
+                    "RailKit request failed: %s -> %s %s",
+                    url,
+                    resp.status_code,
+                    resp.text[:500],
+                )
             resp.raise_for_status()
             data = resp.json()
             # railkit returns {success: bool, data: ..., message: ...}
