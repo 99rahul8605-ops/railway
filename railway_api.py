@@ -59,7 +59,7 @@ class RailwayAPI:
     async def get_train_schedule(self, train_number: str) -> Dict[str, Any]:
         """Fetch full route/schedule for a train."""
         logger.info("Fetching schedule for train %s", train_number)
-        data = await self._get("/train", {"train": train_number})
+        data = await self._get("/v2/train", {"train": train_number})
         if not data.get("route"):
             raise TrainNotFoundError(f"Train {train_number} not found or has no route")
         return data
@@ -67,7 +67,7 @@ class RailwayAPI:
     async def get_station_details(self, station_query: str) -> Dict[str, Any]:
         """Resolve station name or code to official code and name."""
         logger.info("Resolving station %s", station_query)
-        data = await self._get("/station", {"station": station_query})
+        data = await self._get("/v2/station", {"station": station_query})
         if not data.get("station"):
             raise StationNotFoundError(f"Station {station_query} not found")
         return data
@@ -98,7 +98,7 @@ class RailwayAPI:
             "class": travel_class,
             "quota": quota,
         }
-        data = await self._get("/availability", params)
+        data = await self._get("/v2/availability", params)
         return data
 
 # Singleton instance
